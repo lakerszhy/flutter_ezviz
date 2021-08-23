@@ -3,7 +3,7 @@
 //  EZOpenSDKFramework
 //
 //  Created by linyong on 2017/11/20.
-//  Copyright © 2017年 Hikvision. All rights reserved.
+//  Copyright © 2017年 Ezviz. All rights reserved.
 //
 
 

@@ -3,7 +3,7 @@
 //  EzvizOpenSDK
 //
 //  Created by DeJohn Dong on 15/9/10.
-//  Copyright (c) 2015年 Hikvision. All rights reserved.
+//  Copyright (c) 2015年 Ezviz. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -36,7 +36,7 @@
  *  初始化接口，可设置服务器，海外用户使用该初始化方法
  *
  *  @param appKey 传入申请的appKey
- *  @param url apiUrl地址
+ *  @param apiUrl apiUrl地址
  *  @param authUrl auth地址
  *
  *  @return YES/NO
@@ -94,7 +94,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)deleteAlarm:(NSArray *)alarmIds
++ (NSURLSessionDataTask *)deleteAlarm:(NSArray *)alarmIds
                   completion:(void (^)(NSError *error))completion;
 
 /**
@@ -107,7 +107,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)setAlarmStatus:(NSArray *)alarmIds
++ (NSURLSessionDataTask *)setAlarmStatus:(NSArray *)alarmIds
                     alarmStatus:(EZMessageStatus)status
                      completion:(void (^)(NSError *error))completion;
 
@@ -122,7 +122,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)deleteDevice:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)deleteDevice:(NSString *)deviceSerial
                    completion:(void (^)(NSError *error))completion;
 
 /**
@@ -162,7 +162,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)controlPTZ:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)controlPTZ:(NSString *)deviceSerial
                    cameraNo:(NSInteger)cameraNo
                     command:(EZPTZCommand)command
                      action:(EZPTZAction)action
@@ -195,6 +195,7 @@
 + (EZPlayer *)createPlayerWithDeviceSerial:(NSString *)deviceSerial
                                   cameraNo:(NSInteger)cameraNo;
 
++ (EZPlayer *)createPlayerWithDeviceSerial:(NSString *)deviceSerial strCameraNo:(NSString *)strCameraNo;
 
 /**
  *  @since 3.0.0
@@ -242,7 +243,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getDeviceVersion:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)getDeviceVersion:(NSString *)deviceSerial
                        completion:(void (^)(EZDeviceVersion *version, NSError *error))completion;
 
 
@@ -257,7 +258,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)setDeviceEncryptStatus:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)setDeviceEncryptStatus:(NSString *)deviceSerial
                              verifyCode:(NSString *)verifyCode
                                 encrypt:(BOOL)isEncrypt
                              completion:(void (^)(NSError *error))completion;
@@ -272,7 +273,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)setDeviceName:(NSString *)deviceName
++ (NSURLSessionDataTask *)setDeviceName:(NSString *)deviceName
                   deviceSerial:(NSString *)deviceSerial
                     completion:(void (^)(NSError *error))completion;
 
@@ -284,7 +285,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getUserInfo:(void (^)(EZUserInfo *userInfo, NSError *error))completion;
++ (NSURLSessionDataTask *)getUserInfo:(void (^)(EZUserInfo *userInfo, NSError *error))completion;
 
 /**
  *  @since 3.2.0
@@ -296,7 +297,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getUnreadMessageCount:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)getUnreadMessageCount:(NSString *)deviceSerial
                            messageType:(EZMessageType)type
                             completion:(void (^)(NSInteger count, NSError *error))completion;
 
@@ -313,7 +314,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getLeaveMessageList:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)getLeaveMessageList:(NSString *)deviceSerial
                            pageIndex:(NSInteger)pageIndex
                             pageSize:(NSInteger)pageSize
                            beginTime:(NSDate *)beginTime
@@ -330,7 +331,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)setLeaveMessageStatus:(NSArray *)leaveIds
++ (NSURLSessionDataTask *)setLeaveMessageStatus:(NSArray *)leaveIds
                          messageStatus:(EZMessageStatus)status
                             completion:(void (^)(NSError *error))completion;
 
@@ -343,7 +344,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)deleteLeaveMessage:(NSArray *)leaveIds
++ (NSURLSessionDataTask *)deleteLeaveMessage:(NSArray *)leaveIds
                          completion:(void (^)(NSError *error))completion;
 
 /**
@@ -355,7 +356,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getStorageStatus:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)getStorageStatus:(NSString *)deviceSerial
                        completion:(void (^)(NSArray *storageStatus, NSError *error))completion;
 
 /**
@@ -368,7 +369,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)formatStorage:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)formatStorage:(NSString *)deviceSerial
                   storageIndex:(NSInteger)storageIndex
                     completion:(void (^)(NSError *error))completion;
 /**
@@ -382,7 +383,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)probeDeviceInfo:(NSString *) deviceSerial
++ (NSURLSessionDataTask *)probeDeviceInfo:(NSString *) deviceSerial
                       deviceType:(NSString *) deviceType
                       completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
 
@@ -395,7 +396,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getDeviceUpgradeStatus:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)getDeviceUpgradeStatus:(NSString *)deviceSerial
                              completion:(void (^)(EZDeviceUpgradeStatus *status, NSError *error))completion;
 
 /**
@@ -407,7 +408,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)upgradeDevice:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)upgradeDevice:(NSString *)deviceSerial
                     completion:(void (^)(NSError *error))completion;
 
 
@@ -473,9 +474,9 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getDeviceList:(NSInteger)pageIndex
-                      pageSize:(NSInteger)pageSize
-                    completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError *error))completion;
++ (NSURLSessionDataTask *)getDeviceList:(NSInteger)pageIndex
+                               pageSize:(NSInteger)pageSize
+                             completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError *error))completion;
 
 /**
  *  @since 4.2.0
@@ -487,9 +488,9 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getSharedDeviceList:(NSInteger)pageIndex
-                            pageSize:(NSInteger)pageSize
-                          completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError *error))completion;
++ (NSURLSessionDataTask *)getSharedDeviceList:(NSInteger)pageIndex
+                                     pageSize:(NSInteger)pageSize
+                                   completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError *error))completion;
 
 /**
  *  @since 4.2.0
@@ -503,11 +504,11 @@
  *
  *  @return operation
  */
-+ (NSOperation *)searchRecordFileFromCloud:(NSString *)deviceSerial
-                                  cameraNo:(NSInteger)cameraNo
-                                 beginTime:(NSDate *)beginTime
-                                   endTime:(NSDate *)endTime
-                                completion:(void (^)(NSArray *couldRecords, NSError *error))completion;
++ (NSURLSessionDataTask *)searchRecordFileFromCloud:(NSString *)deviceSerial
+                                           cameraNo:(NSInteger)cameraNo
+                                          beginTime:(NSDate *)beginTime
+                                            endTime:(NSDate *)endTime
+                                         completion:(void (^)(NSArray *couldRecords, NSError *error))completion;
 
 /**
  *  @since 4.2.0
@@ -521,11 +522,11 @@
  *
  *  @return operation
  */
-+ (NSOperation *)searchRecordFileFromDevice:(NSString *)deviceSerial
-                                   cameraNo:(NSInteger)cameraNo
-                                  beginTime:(NSDate *)beginTime
-                                    endTime:(NSDate *)endTime
-                                 completion:(void (^)(NSArray *deviceRecords, NSError *error))completion;
++ (NSURLSessionDataTask *)searchRecordFileFromDevice:(NSString *)deviceSerial
+                                            cameraNo:(NSInteger)cameraNo
+                                           beginTime:(NSDate *)beginTime
+                                             endTime:(NSDate *)endTime
+                                          completion:(void (^)(NSArray *deviceRecords, NSError *error))completion;
 
 /**
  *  @since 4.2.0
@@ -540,12 +541,12 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getAlarmList:(NSString *)deviceSerial
-                    pageIndex:(NSInteger)pageIndex
-                     pageSize:(NSInteger)pageSize
-                    beginTime:(NSDate *)beginTime
-                      endTime:(NSDate *)endTime
-                   completion:(void (^)(NSArray *alarmList, NSInteger totalCount, NSError *error))completion;
++ (NSURLSessionDataTask *)getAlarmList:(NSString *)deviceSerial
+                             pageIndex:(NSInteger)pageIndex
+                              pageSize:(NSInteger)pageSize
+                             beginTime:(NSDate *)beginTime
+                               endTime:(NSDate *)endTime
+                            completion:(void (^)(NSArray *alarmList, NSInteger totalCount, NSError *error))completion;
 
 /**
  *  @since 4.2.0
@@ -557,7 +558,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)addDevice:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)addDevice:(NSString *)deviceSerial
                 verifyCode:(NSString *)verifyCode
                 completion:(void (^)(NSError *error))completion;
 
@@ -573,7 +574,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)captureCamera:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)captureCamera:(NSString *)deviceSerial
                       cameraNo:(NSInteger)cameraNo
                     completion:(void (^)(NSString *url, NSError *error))completion;
 
@@ -589,7 +590,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)setVideoLevel:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)setVideoLevel:(NSString *)deviceSerial
                       cameraNo:(NSInteger)cameraNo
                     videoLevel:(EZVideoLevelType)videoLevel
                     completion:(void (^)(NSError *error))completion;
@@ -605,7 +606,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)setDefence:(EZDefenceStatus)defence
++ (NSURLSessionDataTask *)setDefence:(EZDefenceStatus)defence
                deviceSerial:(NSString *)deviceSerial
                  completion:(void (^)(NSError *error))completion;
 
@@ -620,7 +621,7 @@
  *
  *  @return operation
  */
-+ (NSOperation *)getDeviceInfo:(NSString *)deviceSerial
++ (NSURLSessionDataTask *)getDeviceInfo:(NSString *)deviceSerial
                     completion:(void (^)(EZDeviceInfo *deviceInfo, NSError *error))completion;
 
 /**
@@ -763,4 +764,70 @@
  */
 + (void)stopAPConfigWifi;
 
+
+#pragma mark - v4.10
+
+/// 获取手表服务相关信息
+/// @param deviceId 设备序列号
+/// @param completion operation
++ (void)requestGetWatchServerInfo:(NSString *)deviceId
+                       completion:(void (^)(id watchServerInfo, NSError *error))completion;
+
+
+/// 是否支持国标
+/// @param enable YES or NO
++ (void)enableNationalStandard:(BOOL)enable;
+
+
+#pragma mark - v4.11
+
+/**
+*  @since 4.11.0
+*  设置debug日志回调,需在初始化sdk之前调用
+*
+*  @param logCallback 日志回调
+*/
++ (void)setDebugLogCallBack:(void(^)(NSString *logStr))logCallback;
+
+
+#pragma mark - v4.13
+/**
+ *  获取指定时间内的所有录像文件
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号，传入<=0的值则为默认值
+ *  @param beginTime    开始时间，传入nil则为当天00:00:00
+ *  @param endTime      结束时间，传入nil则为当天23:59:59
+ *  @param rectype      回放源，0-系统自动选择，1-云存储，2-本地录像。非必选，默认为0，传入负值则为默认值
+ *  @param bizType       设备归属业务来源
+ *  @param platFormId  平台ID
+ *  @param completion   回调block records:EzvizRecordFileInfo的数组
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)searchRecordFile:(NSString *) deviceSerial
+                                  cameraNo:(NSString *) cameraNo
+                                 beginTime:(NSDate *) beginTime
+                                   endTime:(NSDate *) endTime
+                                   recType:(NSInteger) rectype
+                                   bizType:(NSString *)bizType
+                                platFormId:(NSString *)platFormId
+                                completion:(void (^)(id records, NSError *error))completion;
+
+#pragma mark - v4.16 多方音视频
+/// 创建会议信息
+/// @param password 自定义密码
+/// @param customId 开发者自定义用户ID
+/// @param completion operation
++ (void)requestCallingMeetingInfo:(NSString *)password
+                         customId:(NSInteger)customId
+                       completion:(void (^)(int32_t roomId, NSString *vtmAddress ,NSString *clientid ,NSInteger customId, NSError *error))completion;
+
+/// 加入方获取会议信息
+/// @param roomId  房间号
+/// @param customId 开发者自定义用户ID
+/// @param completion operation
++ (void)requestCalledMeetingInfo:(NSString *)roomId
+                        customId:(NSInteger)customId
+                       completion:(void (^)(int32_t roomId, NSString *vtmAddress,NSString *clientid ,NSInteger customId, NSError *error))completion;
 @end

@@ -3,7 +3,7 @@
 //  EZOpenSDK
 //
 //  Created by yuqian on 2019/7/2.
-//  Copyright © 2019 Hikvision. All rights reserved.
+//  Copyright © 2019 Ezviz. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,12 +17,21 @@ typedef NS_ENUM(NSInteger, EZRecordDownloaderStatus)
     EZRecordDownloaderStatusMoreToken = 3,
 };
 
+typedef enum : NSUInteger {
+    EZRecordDownloadTaskWaitting,
+    EZRecordDownloadTaskDownloading,
+    EZRecordDownloadTaskCompleting,
+} EZRecordDownloadTaskStatus;
+
 @interface EZRecordDownloadTask : NSObject
 
 /**
  每个下载任务的唯一标识
  */
-@property (nonatomic, copy) NSString * taskID;
+@property (nonatomic, assign) NSUInteger taskID;
+
+
+@property (nonatomic, assign) EZRecordDownloadTaskStatus taskStatus;
 
 /**
  本地存放路径

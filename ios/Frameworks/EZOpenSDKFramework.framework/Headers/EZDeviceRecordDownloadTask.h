@@ -3,7 +3,7 @@
 //  EZOpenSDK
 //
 //  Created by yuqian on 2019/7/2.
-//  Copyright © 2019 Hikvision. All rights reserved.
+//  Copyright © 2019 Ezviz. All rights reserved.
 //
 
 #import "EZRecordDownloadTask.h"
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param savePath 下载存储路径
  @param completion 完成回调，成功返回task，失败返回nil
  */
-- (void) initTaskWithID:(NSString *)taskID
+- (void) initTaskWithID:(NSUInteger)taskID
    DeviceRecordFileInfo:(EZDeviceRecordFile *)recordFile
            deviceSerial:(NSString *)deviceSerial
                cameraNo:(NSInteger)cameraNo
