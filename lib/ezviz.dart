@@ -7,7 +7,6 @@ import 'package:flutter_ezviz/ezviz_utils.dart';
 
 /// 插件Manager
 class EzvizManager {
-
   static const MethodChannel _channel =
       const MethodChannel(EzvizChannelMethods.methodChannelName);
 
@@ -22,7 +21,7 @@ class EzvizManager {
   EzvizManager._init();
 
   /// 事件监听
-  StreamSubscription _dataSubscription;
+  late StreamSubscription _dataSubscription;
 
   /// 设置EventHandler
   void setEventHandler(EzvizOnEvent event, EzvizOnError error) {
@@ -33,20 +32,14 @@ class EzvizManager {
         var jsonData = data is String ? json.decode(data) : data;
         ezvizLog("JSON => $jsonData");
         var ezvizEvent = EzvizEvent.init(jsonData);
-        if (ezvizEvent != null) {
-          if (event != null) {
-            event(ezvizEvent);
-          }
-        }
+        event(ezvizEvent);
       }
     }, onError: error);
   }
 
   /// 停止EventHandler
   void removeEventHandler() {
-    if (_dataSubscription != null) {
-      _dataSubscription.cancel();
-    }
+    _dataSubscription.cancel();
   }
 
   Future<String> get platformVersion async {
@@ -62,11 +55,12 @@ class EzvizManager {
   }
 
   /// 初始化SDK
-  Future<bool> initSDK(EzvizInitOptions options) async{
+  Future<bool> initSDK(EzvizInitOptions? options) async {
     if (options == null) {
       options = EzvizInitOptions();
     }
-    final bool result = await _channel.invokeMethod(EzvizChannelMethods.initSDK,options.toJson());
+    final bool result = await _channel.invokeMethod(
+        EzvizChannelMethods.initSDK, options.toJson());
     return result;
   }
 
@@ -84,30 +78,31 @@ class EzvizManager {
 
   /// 设置AccessToken
   Future setAccessToken(String accessToken) async {
-    await _channel
-        .invokeMethod(EzvizChannelMethods.setAccessToken, {'accessToken': accessToken});
+    await _channel.invokeMethod(
+        EzvizChannelMethods.setAccessToken, {'accessToken': accessToken});
   }
 
   /// 获取设备信息
   ///
-  Future<EzvizDeviceInfo> getDeviceInfo(String deviceSerial) async {
-    Map<String, dynamic> result = await _channel.invokeMapMethod(
+  Future<EzvizDeviceInfo?> getDeviceInfo(String deviceSerial) async {
+    final result = await _channel.invokeMapMethod(
         EzvizChannelMethods.deviceInfo, {'deviceSerial': deviceSerial});
     if (result != null) {
-      return EzvizDeviceInfo.fronJson(result);
+      return EzvizDeviceInfo.fromJson(result as Map<String, dynamic>);
     } else {
       return null;
     }
   }
 
   /// 获取所有的设备信息
-  Future<List<EzvizDeviceInfo>> get deviceList async {
-    List<Map<String, dynamic>> result =
-        await _channel.invokeListMethod(EzvizChannelMethods.deviceInfoList);
+  Future<List<EzvizDeviceInfo>?> get deviceList async {
+    final result = await _channel.invokeListMethod(
+      EzvizChannelMethods.deviceInfoList,
+    );
     if (result != null) {
       List<EzvizDeviceInfo> deviceList = [];
       result.forEach((item) {
-        deviceList.add(EzvizDeviceInfo.fronJson(item));
+        deviceList.add(EzvizDeviceInfo.fromJson(item));
       });
       return deviceList;
     } else {
@@ -183,17 +178,23 @@ class EzvizManager {
   ///   - pwd: 密码
   ///   - ipAddr: 网络地址
   ///   - port: 端口号
-  Future<EzvizNetDeviceInfo> loginNetDevice(
-      String userId, String pwd, String ipAddr, int port) async {
-    final Map<String, dynamic> result =
-        await _channel.invokeMapMethod(EzvizChannelMethods.loginNetDevice, {
-      "userId": userId,
-      "pwd": pwd,
-      "ipAddr": ipAddr,
-      "port": port,
-    });
+  Future<EzvizNetDeviceInfo?> loginNetDevice(
+    String userId,
+    String pwd,
+    String ipAddr,
+    int port,
+  ) async {
+    final result = await _channel.invokeMapMethod(
+      EzvizChannelMethods.loginNetDevice,
+      {
+        "userId": userId,
+        "pwd": pwd,
+        "ipAddr": ipAddr,
+        "port": port,
+      },
+    );
     if (result != null) {
-      return EzvizNetDeviceInfo.fromJson(result);
+      return EzvizNetDeviceInfo.fromJson(result as Map<String, dynamic>);
     } else {
       return null;
     }

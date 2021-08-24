@@ -4,16 +4,20 @@ typedef void EzvizOnEvent(EzvizEvent event);
 /// 插件事件异常
 typedef void EzvizOnError(error);
 
-
 /// 初始化SDK参数对象
 class EzvizInitOptions {
-  String appKey = "";
-  String accessToken = "";
-  bool enableLog = false;
-  bool enableP2P = false;
-  EzvizInitOptions(
-      {this.appKey, this.accessToken, this.enableLog, this.enableP2P});
-  
+  final String appKey;
+  final String accessToken;
+  final bool enableLog;
+  final bool enableP2P;
+
+  EzvizInitOptions({
+    this.appKey = '',
+    this.accessToken = '',
+    this.enableLog = false,
+    this.enableP2P = false,
+  });
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['appKey'] = this.appKey;
@@ -39,13 +43,14 @@ class EzvizNetDeviceInfo {
   // 设备类型
   int byDVRType = 0;
 
-  EzvizNetDeviceInfo(
-      {this.userId,
-      this.dChannelCount,
-      this.dStartChannelNo,
-      this.channelCount,
-      this.startChannelNo,
-      this.byDVRType});
+  EzvizNetDeviceInfo({
+    required this.userId,
+    required this.dChannelCount,
+    required this.dStartChannelNo,
+    required this.channelCount,
+    required this.startChannelNo,
+    required this.byDVRType,
+  });
 
   EzvizNetDeviceInfo.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -71,10 +76,14 @@ class EzvizDeviceInfo {
   /// 摄像机通道号
   int cameraNum = 0;
 
-  EzvizDeviceInfo(
-      {this.deviceSerial, this.deviceName, this.isSupportPTZ, this.cameraNum});
+  EzvizDeviceInfo({
+    required this.deviceSerial,
+    required this.deviceName,
+    required this.isSupportPTZ,
+    required this.cameraNum,
+  });
 
-  EzvizDeviceInfo.fronJson(Map<String, dynamic> json) {
+  EzvizDeviceInfo.fromJson(Map<String, dynamic> json) {
     deviceSerial = json['deviceSerial'];
     deviceName = json['deviceName'];
     isSupportPTZ = json['isSupportPTZ'];
@@ -85,22 +94,20 @@ class EzvizDeviceInfo {
 /// Event的对象
 class EzvizEvent {
   /// event类型 (见EzvizEventNames)
-  String eventType;
+  String? eventType;
+
   /// 信息
-  String msg;
+  String? msg;
+
   /// 成功后的数据
   dynamic data;
 
-  EzvizEvent(this.eventType,this.msg);
+  EzvizEvent(this.eventType, this.msg);
 
   factory EzvizEvent.init(Map<String, dynamic> data) {
-
-    if (data['eventType'] == null)
-      return null;
-
-    return new EzvizEvent(
-      data['eventType'] as String,
-      data['msg'] as String,
+    return EzvizEvent(
+      data['eventType'] as String?,
+      data['msg'] as String?,
     );
   }
 }
@@ -114,14 +121,14 @@ class EzvizPlayerStatus {
   ///   * 3 Pause: 暂停状态(回放才有暂停状态)
   ///   * 4 Stop: 停止状态
   ///   * 9 Error: 错误状态
-  int status;
+  int? status;
 
   /// 错误信息，只有在Error状态才不为空
-  String message;
+  String? message;
 
-  EzvizPlayerStatus({this.status, this.message});
+  EzvizPlayerStatus({required this.status, required this.message});
 
-  EzvizPlayerStatus.fromJson(Map<String, dynamic> json){
+  EzvizPlayerStatus.fromJson(Map<String, dynamic> json) {
     this.status = json['status'];
     this.message = json['message'];
   }

@@ -5,7 +5,7 @@ author: lakerszhy
 homepage: https://github.com/lakerszhy/flutter_ezviz.git
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
   flutter:
