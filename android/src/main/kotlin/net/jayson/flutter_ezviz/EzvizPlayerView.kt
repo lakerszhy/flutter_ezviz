@@ -65,7 +65,7 @@ class EzvizPlayerView(context: Context) : FrameLayout(context), SurfaceHolder.Ca
 
     // 创建一个Handler
     private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
-        override fun handleMessage(msg: Message?) {
+        override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             Log.e(TAG,"ID:"+msg?.what)
             when (msg?.what) {
@@ -217,11 +217,11 @@ class EzvizPlayerView(context: Context) : FrameLayout(context), SurfaceHolder.Ca
         eventHandler?.onDispatchStatus(eventResult)
     }
 
-    override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
+    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
 
     }
 
-    override fun surfaceCreated(holder: SurfaceHolder?) {
+    override fun surfaceCreated(holder: SurfaceHolder) {
         Log.i(TAG, "surfaceCreated")
         player?.setSurfaceHold(holder)
         if (isInitSurface.compareAndSet(false, true) && isResumePlay.get()) {
@@ -229,7 +229,7 @@ class EzvizPlayerView(context: Context) : FrameLayout(context), SurfaceHolder.Ca
         }
     }
 
-    override fun surfaceDestroyed(holder: SurfaceHolder?) {
+    override fun surfaceDestroyed(holder: SurfaceHolder) {
         Log.i(TAG, "surfaceDestroyed")
         isInitSurface.set(false)
     }
