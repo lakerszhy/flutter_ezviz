@@ -142,8 +142,13 @@ class EzvizManager {
   ///   - command: 云台指令
   ///   - action: 云台动作
   ///   - speed: 云台速度
-  Future<bool> controlPTZ(String deviceSerial, int cameraId, String command,
-      String action, int speed) async {
+  Future<bool> controlPTZ(
+    String deviceSerial,
+    int cameraId,
+    String command,
+    String action, {
+    int speed = EzvizPtzSpeeds.Normal,
+  }) async {
     if (!EzvizPtzCommands.isPtzCommand(command)) {
       ezvizLog('不合法的参数: command');
       return false;

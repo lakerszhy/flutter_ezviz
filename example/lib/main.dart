@@ -264,7 +264,10 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _controllerItem(context, 1, Icons.arrow_left),
-              SizedBox(width: 44,height: 44,),
+              SizedBox(
+                width: 44,
+                height: 44,
+              ),
               _controllerItem(context, 3, Icons.arrow_right),
             ],
           ),
@@ -287,8 +290,7 @@ class _HomeState extends State<Home> {
       height: 44,
       decoration: BoxDecoration(
           border: Border.all(width: 0.5, color: Colors.black12),
-          borderRadius: BorderRadius.all(Radius.circular(5.0))
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
       child: GestureDetector(
         onTapDown: (detail) async {
           await this.onControllerPad(cmd, false);
@@ -365,8 +367,9 @@ class _HomeState extends State<Home> {
       default:
     }
     String action = isStop ? EzvizPtzActions.Stop : EzvizPtzActions.Start;
-    return await EzvizManager.shared().controlPTZ(this._deviceSerial,
-        this._cameraNo, command, action, EzvizPtzSpeeds.Normal);
+    return await EzvizManager.shared().controlPTZ(
+        this._deviceSerial, this._cameraNo, command, action,
+        speed: EzvizPtzSpeeds.Normal);
   }
 
   Future<bool> onVideoLevel(BuildContext context, String name) async {
