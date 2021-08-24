@@ -3,15 +3,15 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_ezviz'
-  s.version          = '0.0.2'
-  s.summary          = 'A new flutter plugin project for ezviz sdk.'
+  s.version          = '1.0.0'
+  s.summary          = 'A flutter plugin project for ezviz sdk.'
   s.description      = <<-DESC
 萤石云插件-Flutter
                        DESC
-  s.homepage         = 'https://github.com/jaysonjh/flutter_ezviz.git'
+  s.homepage         = 'https://github.com/lakerszhy/flutter_ezviz.git'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Guangzhou Zhiye Tech Limit.' => 'jayson@zhiyesoft.com' }
-  s.source           = { :git => "https://github.com/jaysonjh/flutter_ezviz.git", :tag => "master" }
+  s.author           = { 'Lakerszhy' => 'lakerszhy@gmail.com' }
+  s.source           = { :git => "https://github.com/lakerszhy/flutter_ezviz.git", :tag => "master" }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
