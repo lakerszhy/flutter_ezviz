@@ -1,7 +1,6 @@
 name: flutter_ezviz
 description: A flutter plugin project for ezviz sdk.
 version: 1.0.1
-author: lakerszhy
 homepage: https://github.com/lakerszhy/flutter_ezviz.git
 
 environment:

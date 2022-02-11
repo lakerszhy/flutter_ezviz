@@ -14,9 +14,7 @@ import android.os.Looper
 import android.os.Message
 import com.videogo.openapi.EZConstants
 import com.videogo.errorlayer.ErrorInfo
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.stringify
 
 /**
  * 播放状态
@@ -209,11 +207,10 @@ class EzvizPlayerView(context: Context) : FrameLayout(context), SurfaceHolder.Ca
      * @param status
      * @param message
      */
-    @UnstableDefault
     private fun dispatchStatus(status: EzvizPlayerStatus, message: String?) {
         val playerResult = EzvizPlayerResult(status.ordinal,message)
 
-        val eventResult = EzvizEventResult(EzvizPlayerChannelEvents.playerStatusChange,"Player Status Changed", Json.stringify(EzvizPlayerResult.serializer(),playerResult))
+        val eventResult = EzvizEventResult(EzvizPlayerChannelEvents.playerStatusChange,"Player Status Changed", Json.encodeToString(EzvizPlayerResult.serializer(),playerResult))
         eventHandler?.onDispatchStatus(eventResult)
     }
 

@@ -7,7 +7,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugin.platform.PlatformView
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.*
@@ -121,8 +120,7 @@ class EzvizFlutterPlayerView(context:Context, registrar: PluginRegistry.Registra
         this.eventSink = null
     }
 
-    @UnstableDefault
     override fun onDispatchStatus(event: EzvizEventResult) {
-        this.eventSink?.success(Json.stringify(EzvizEventResult.serializer(),event))
+        this.eventSink?.success(Json.encodeToString(EzvizEventResult.serializer(),event))
     }
 }
