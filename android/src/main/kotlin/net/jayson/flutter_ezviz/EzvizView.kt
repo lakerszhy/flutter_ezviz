@@ -7,12 +7,12 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugin.platform.PlatformView
+import io.flutter.embedding.engine.plugins.FlutterPlugin
 import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EzvizFlutterPlayerView(context:Context, registrar: PluginRegistry.Registrar, id: Int) : PlatformView, MethodChannel.MethodCallHandler,EventChannel.StreamHandler,EzvizPlayerEventHandler {
-
+class EzvizFlutterPlayerView(context:Context, flutterPluginBinding: FlutterPlugin.FlutterPluginBinding, id: Int) : PlatformView, MethodChannel.MethodCallHandler,EventChannel.StreamHandler,EzvizPlayerEventHandler {
     private val player: EzvizPlayerView
     private val methodChannel: MethodChannel
     private val eventChannel: EventChannel
@@ -24,8 +24,8 @@ class EzvizFlutterPlayerView(context:Context, registrar: PluginRegistry.Registra
         player.eventHandler = this
         val methodChannelName = EzvizPlayerChannelMethods.methodChannelName + "_${id}"
         val eventChannelName = EzvizPlayerChannelEvents.eventChannelName + "_${id}"
-        methodChannel = MethodChannel( registrar.messenger(),methodChannelName)
-        eventChannel = EventChannel(registrar.messenger(),eventChannelName)
+        methodChannel = MethodChannel(flutterPluginBinding.binaryMessenger,methodChannelName)
+        eventChannel = EventChannel(flutterPluginBinding.binaryMessenger,eventChannelName)
         eventChannel.setStreamHandler(this)
         methodChannel.setMethodCallHandler(this)
     }
